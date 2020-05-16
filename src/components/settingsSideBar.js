@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Icon, Image, Menu, Segment, Sidebar, Button } from 'semantic-ui-react'
-import './map.css'
+import { Icon, Menu, Segment, Sidebar, Button, Image } from 'semantic-ui-react'
+import './settingsSideBar.css'
 
-class Map extends Component {
+class SettingsSideBar extends Component {
     state = {
         visible: false
     }
@@ -47,4 +47,4 @@ class Map extends Component {
     }
 }
 
-export default Map
+export default SettingsSideBar

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
-import Map from './map'
+import SettingsSideBar from './settingsSideBar'
 
-class MainSidebar extends Component {
+class Sidenav extends Component {
 
     render() {
         console.log('dafge')
@@ -32,7 +32,7 @@ class MainSidebar extends Component {
                     </Sidebar>
 
                     <Sidebar.Pusher>
-                            <Map></Map>
+                            <SettingsSideBar></SettingsSideBar>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </div>
@@ -41,4 +41,4 @@ class MainSidebar extends Component {
 }
 
 
-export default MainSidebar
+export default Sidenav

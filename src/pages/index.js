@@ -1,11 +1,11 @@
 import React, { Component } from "react"
-import MainSideBar from "../components/main-sidebar"
+import Sidenav from "../components/sidenav"
 import 'semantic-ui-css/semantic.min.css'
 
 class IndexPage extends Component {
   render() {
     return (
-      <MainSideBar />
+      <Sidenav />
     )
   }
 }
