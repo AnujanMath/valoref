@@ -10,9 +10,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline"
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted"
-import SettingsSideBar from "./SettingsSideBar"
 
-import Demo from './newSideBar';
+import Sidebar from './newSideBar';
 const drawerWidth = 70
 
 const useStyles = makeStyles(theme => ({
@@ -26,12 +25,14 @@ const useStyles = makeStyles(theme => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    zIndex: theme.zIndex.drawer + 1
+    // zIndex important so that it renders OVER the character selection navbar
   },
   drawerPaper: {
     width: drawerWidth,
     display: "flex",
     justifyContent: 'center',
-    backgroundColor:"#111315"
+    backgroundColor: "#111315",
   },
   active: {
     background: "linear-gradient(180deg, #FF7D87 0%, #FF4654 100%) !important",
@@ -47,8 +48,18 @@ const useStyles = makeStyles(theme => ({
 
 export default function PermanentDrawerLeft() {
   const classes = useStyles()
+
   const [selectedIndex, setSelectedIndex] = React.useState(1)
+
+  const [showSideBar, setShowSideBar] = React.useState(true);
+
   const handleListItemClick = (event, index) => {
+    console.log(event, index)
+    if (index === 0) {
+      setShowSideBar(!showSideBar)
+    } else {
+      setShowSideBar(false);
+    }
     setSelectedIndex(index)
   }
   return (
@@ -62,32 +73,30 @@ export default function PermanentDrawerLeft() {
           paper: classes.drawerPaper,
         }}
         anchor="left"
-        width
       >
         <List component="nav" aria-label="secondary mailbox folder">
           <ListItem
             button
-            selected={selectedIndex === 2}
+            selected={selectedIndex === 0}
             classes={{ selected: classes.active }}
-            onClick={event => handleListItemClick(event, 2)}
+            onClick={event => handleListItemClick(event, 0)}
           >
-            <FormatListBulletedIcon style={{fill: "grey"}} />
+            <FormatListBulletedIcon style={{ fill: "grey" }} />
           </ListItem>
           <ListItem
             button
-            selected={selectedIndex === 3}
+            selected={selectedIndex === 1}
             classes={{ selected: classes.active }}
-            onClick={event => handleListItemClick(event, 3)}
+            onClick={event => handleListItemClick(event, 1)}
           >
-            <HelpOutlineIcon style={{fill: "grey"}}/> {/* TO COMPLETE LATER: Change color after clicking from grey to white */}
+            <HelpOutlineIcon style={{ fill: "grey" }} /> {/* TO COMPLETE LATER: Change color after clicking from grey to white */}
           </ListItem>
         </List>
       </Drawer>
 
       <main className={classes.content}>
         <Typography paragraph>Test</Typography>
-        <SettingsSideBar></SettingsSideBar>
-        <Demo></Demo>
+        <Sidebar showSideBar={showSideBar}></Sidebar>
       </main>
     </div>
   )
