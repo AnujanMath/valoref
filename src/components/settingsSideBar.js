@@ -15,7 +15,7 @@ class SettingsSideBar extends Component {
   }
   render() {
     return (
-      <p></p>
+      <p>poop</p>
     )
     //   <Sidebar.Pushable as={Segment}>
     //     <Sidebar

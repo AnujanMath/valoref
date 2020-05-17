@@ -1,12 +1,5 @@
-import React, { Component } from "react"
 import Sidenav from "../components/newSideNav"
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-class IndexPage extends Component {
-  render() {
-    return (
-      <Sidenav></Sidenav>
-    )
-  }
-}
-
-export default IndexPage
+ReactDOM.render(<Sidenav />, document.querySelector('#root'));

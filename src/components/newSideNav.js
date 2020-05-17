@@ -10,6 +10,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline"
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted"
+import SettingsSideBar from "./SettingsSideBar"
+
+import Demo from './newSideBar';
 const drawerWidth = 70
 
 const useStyles = makeStyles(theme => ({
@@ -26,10 +29,12 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    display: "flex",
+    justifyContent: 'center',
+    backgroundColor:"#111315"
   },
   active: {
-    background: 'linear-gradient(180deg, #FF7D87 0%, #FF4654 100%) !important'
-
+    background: "linear-gradient(180deg, #FF7D87 0%, #FF4654 100%) !important",
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -64,25 +69,25 @@ export default function PermanentDrawerLeft() {
             button
             selected={selectedIndex === 2}
             classes={{ selected: classes.active }}
-
             onClick={event => handleListItemClick(event, 2)}
           >
-            <FormatListBulletedIcon />
+            <FormatListBulletedIcon style={{fill: "grey"}} />
           </ListItem>
           <ListItem
             button
             selected={selectedIndex === 3}
             classes={{ selected: classes.active }}
-
             onClick={event => handleListItemClick(event, 3)}
           >
-            <HelpOutlineIcon />
+            <HelpOutlineIcon style={{fill: "grey"}}/> {/* TO COMPLETE LATER: Change color after clicking from grey to white */}
           </ListItem>
         </List>
       </Drawer>
 
       <main className={classes.content}>
         <Typography paragraph>Test</Typography>
+        <SettingsSideBar></SettingsSideBar>
+        <Demo></Demo>
       </main>
     </div>
   )
