@@ -12,6 +12,9 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline"
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted"
 
 import Sidebar from './newSideBar';
+import MainContent from './main-content/mainContent';
+import { Box } from "@material-ui/core"
+
 const drawerWidth = 70
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +44,9 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
+    backgroundColor: '#1F2327',
+    //look into material-ui theming
     padding: theme.spacing(3),
   },
 }))
@@ -49,21 +54,22 @@ const useStyles = makeStyles(theme => ({
 export default function PermanentDrawerLeft() {
   const classes = useStyles()
 
-  const [selectedIndex, setSelectedIndex] = React.useState(1)
+  const [selectedIndex, setSelectedIndex] = React.useState(-1)
 
-  const [showSideBar, setShowSideBar] = React.useState(true);
+  const [showSideBar, setShowSideBar] = React.useState(false);
 
   const handleListItemClick = (event, index) => {
     console.log(event, index)
     if (index === 0) {
       setShowSideBar(!showSideBar)
+      setSelectedIndex(!showSideBar ? index : -1)
     } else {
       setShowSideBar(false);
+      setSelectedIndex(index)
     }
-    setSelectedIndex(index)
   }
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <CssBaseline />
 
       <Drawer
@@ -95,9 +101,9 @@ export default function PermanentDrawerLeft() {
       </Drawer>
 
       <main className={classes.content}>
-        <Typography paragraph>Test</Typography>
         <Sidebar showSideBar={showSideBar}></Sidebar>
+        <MainContent></MainContent>
       </main>
-    </div>
+    </Box>
   )
 }

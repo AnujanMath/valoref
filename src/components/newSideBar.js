@@ -8,7 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Box } from '@material-ui/core';
 
 const useStyles = makeStyles({
   paper: {
@@ -37,7 +37,7 @@ export default function SideBar({ showSideBar }) {
   };
   const list = () => (
 
-    <div
+    <Box
       style={{ width: 250, color: 'white' }}
     >
       <List >
@@ -56,7 +56,7 @@ export default function SideBar({ showSideBar }) {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 
   return (
