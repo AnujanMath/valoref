@@ -6,6 +6,7 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import { makeStyles, Box } from "@material-ui/core"
 import ListSubheader from "@material-ui/core/ListSubheader"
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles({
   paper: {
@@ -29,8 +30,9 @@ const characters = [
   "Viper",
 ]
 
-export default function SideBar({ showSideBar }) {
+export default function SideBar({ showSideBar, selectedIndex }) {
   console.log(showSideBar)
+  console.log(selectedIndex)
   const [state, setState] = React.useState({
     left: false,
   })
@@ -46,6 +48,34 @@ export default function SideBar({ showSideBar }) {
 
     setState({ state, left: !state.left })
   }
+  const FAQ = () => (
+    <Box style={{ width: 250, color: "white" }}>
+      <List
+        subheader={
+          <ListSubheader
+            style={{ color: "#A3A3A3" }}
+            component="div"
+            id="nested-list-subheader"
+          >
+            Help & FAQ
+          </ListSubheader>
+        }
+      >
+        <ListSubheader>
+          <ListItemText>
+
+            <Typography style={{ color: "white" }}variant="subheading">
+              How do I submit my own tip and screenshots?
+            </Typography>
+            <Typography style={{ color: "#88898A" }} variant="body1" color="textSecondary">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede
+            </Typography>
+            
+          </ListItemText>
+        </ListSubheader>
+      </List>
+    </Box>
+  )
   const list = () => (
     <Box style={{ width: 250, color: "white" }}>
       <List
@@ -98,7 +128,7 @@ export default function SideBar({ showSideBar }) {
         variant="persistent"
         onClick={toggleDrawer()}
       >
-        {list()}
+        {selectedIndex == 0 ? list() : FAQ()}
       </Drawer>
     </React.Fragment>
   )

@@ -60,7 +60,7 @@ export default function PermanentDrawerLeft() {
 
   const handleListItemClick = (event, index) => {
     console.log(event, index)
-    if (index === 0) {
+    if (index === 0 || index === 1) {
       setShowSideBar(!showSideBar)
       setSelectedIndex(!showSideBar ? index : -1)
     } else {
@@ -101,7 +101,7 @@ export default function PermanentDrawerLeft() {
       </Drawer>
 
       <main className={classes.content}>
-        <Sidebar showSideBar={showSideBar}></Sidebar>
+        <Sidebar selectedIndex={selectedIndex} showSideBar={showSideBar}></Sidebar>
         <MainContent></MainContent>
       </main>
     </Box>
