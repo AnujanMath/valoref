@@ -50,6 +50,8 @@ export default class App extends React.PureComponent {
           height={500}
           ref={Viewer => (this.Viewer = Viewer)}
           tool={this.state.tool}
+          background="#1F2327"
+          preventPanOutside={true}
           onChangeTool={tool => this.changeTool(tool)}
           value={this.state.value}
           onChangeValue={value => this.changeValue(value)}
