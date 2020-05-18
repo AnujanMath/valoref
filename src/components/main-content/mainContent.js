@@ -4,11 +4,14 @@ import Card from "@material-ui/core/Card"
 import Map from "./map"
 import Slide from "@material-ui/core/Slide"
 import Button from "@material-ui/core/Button"
-import SettingsIcon from '@material-ui/icons/Settings';
-import CloseIcon from '@material-ui/icons/Close';
+import SettingsIcon from "@material-ui/icons/Settings"
+import CloseIcon from "@material-ui/icons/Close"
+import Typography from "@material-ui/core/Typography"
+import Popover from "@material-ui/core/Popover"
+
+import SwitchListSecondary from "./switchBoard.js"
 export default function MainContent() {
   const [showPanels, setShowPanels] = React.useState(false)
-  const [showSettings, setShowSettings] = React.useState(false)
   const [imageArray, setImageArray] = React.useState([
     "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
     "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
@@ -21,8 +24,16 @@ export default function MainContent() {
   const togglePanel = () => {
     setShowPanels(!showPanels)
   }
-  const toggleSettings = () => {
-    setShowSettings(!showSettings)
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+  const open = Boolean(anchorEl)
+  const id = open ? "simple-popover" : undefined
+
+  const handleClose = () => {
+    setAnchorEl(null)
   }
   return (
     <Box>
@@ -64,9 +75,37 @@ export default function MainContent() {
       <Button onClick={() => togglePanel()} variant="contained" color="primary">
         Panel Toggle
       </Button>
-      <Button onClick={() => toggleSettings()} variant="contained" style={{background:"#16191C", position: 'absolute', right: 50}}> {/* I think theres a better way to right align lol */}
-        {  showSettings  ? <CloseIcon style={{ color: "#7a7a7a" }}/> : <SettingsIcon style={{ color: "#7a7a7a" }}/>}
+      <Button
+        aria-describedby={id}
+        onClick={handleClick}
+        variant="contained"
+        style={{ background: "#16191C", position: "absolute", right: 50 }}
+      >
+        {" "}
+        {/* I think theres a better way to right align lol */}
+        {open ? (
+          <CloseIcon style={{ color: "#7a7a7a" }} />
+        ) : (
+          <SettingsIcon style={{ color: "#7a7a7a" }} />
+        )}
       </Button>
+
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+      >
+        <SwitchListSecondary/>
+      </Popover>
     </Box>
   )
 }
