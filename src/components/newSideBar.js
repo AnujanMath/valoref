@@ -64,7 +64,7 @@ export default function SideBar({ showSideBar, selectedIndex }) {
         <ListSubheader>
           <ListItemText>
 
-            <Typography style={{ color: "white" }}variant="subheading">
+            <Typography style={{ color: "white" }}variant="h6">
               How do I submit my own tip and screenshots?
             </Typography>
             <Typography style={{ color: "#88898A" }} variant="body1" color="textSecondary">
@@ -128,7 +128,7 @@ export default function SideBar({ showSideBar, selectedIndex }) {
         variant="persistent"
         onClick={toggleDrawer()}
       >
-        {selectedIndex == 0 ? list() : FAQ()}
+        {selectedIndex === 0 ? list() : FAQ()}
       </Drawer>
     </React.Fragment>
   )
