@@ -15,21 +15,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SwitchListSecondary(state) {
+  console.log(state)
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(['wifi']);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
 
   return (
     <List className={classes.root}>
@@ -39,8 +28,8 @@ export default function SwitchListSecondary(state) {
           <Switch
             edge="end"
             style={{ color:"linear-gradient(180deg, #FF7D87 0%, #FF4654 100%) !important"}}
-            onChange={handleToggle('wifi')}
-            checked={state.toggle}
+            onChange={state.handleWallToggle}
+            checked={state.wall}
             inputProps={{ 'aria-labelledby': 'switch-list-label-wifi' }}
           />
         </ListItemSecondaryAction>
@@ -51,8 +40,8 @@ export default function SwitchListSecondary(state) {
         <ListItemSecondaryAction>
           <Switch
             edge="end"
-            onChange={handleToggle('bluetooth')}
-            checked={state.toggle}
+            onChange={state.handleLabelToggle}
+            checked={state.label}
             inputProps={{ 'aria-labelledby': 'switch-list-label-bluetooth' }}
           />
         </ListItemSecondaryAction>

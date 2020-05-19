@@ -4,33 +4,46 @@ import { createStore } from "redux"
 import SwitchListSecondary from "../components/main-content/switchBoard.js"
 
 import { Provider, connect } from "react-redux"
-const countReducer = function (state = true, action) { //how do we make state support more than just one 
+
+const initialState = {
+  wall: false,
+  label: true,
+}
+function settingsReducer(state = initialState, action) {
+  /* https://stackoverflow.com/questions/36786244/nested-redux-reducers */
   switch (action.type) {
-    case "toggle":
-      return !state
+    case "TOGGLE_WALL":
+      return { ...state, wall: !state.wall }
+    case "TOGGLE_LABEL":
+      return { ...state, label: !state.label }
+
     default:
       return state
   }
 }
 const mapStateToProps = state => {
   return {
-    count: state,
+    wall: state.wall,
+    label: state.label,
   }
 }
-const Component = ({ count, handleToggle }) => (
+const Component = ({ wall, label, handleWallToggle, handleLabelToggle }) => (
   <div>
-    <h1>Helloworld React & Redux! {count ? "10" : "5"}</h1>
-    <button onClick={handleToggle}>Toggle meeeeeeeeeeeeeeee</button>
-    <SwitchListSecondary toggle={count} />
+    <h1>Helloworld React & Redux! {wall ? "10" : "5"}</h1>
+    <button onClick={handleWallToggle}>Toggle meeeeeeeeeeeeeeee</button>
+    <SwitchListSecondary wall={wall} label={label} handleWallToggle={handleWallToggle} handleLabelToggle={handleLabelToggle} />
   </div>
 )
 const mapDispatchToProps = dispatch => {
   return {
-    handleToggle: () => dispatch({ type: "toggle" }),
+    handleWallToggle: () => dispatch({ type: "TOGGLE_WALL" }),
+    handleLabelToggle: () => dispatch({ type: "TOGGLE_LABEL" }),
+
+
   }
 }
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component)
-let store = createStore(countReducer)
+let store = createStore(settingsReducer)
 
 export default function IndexPage() {
   return (
