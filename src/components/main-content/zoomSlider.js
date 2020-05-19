@@ -10,7 +10,7 @@ const useStylesSlider = makeStyles({
     root: {
         width: 200,
         padding: 3,
-        paddingBottom:0
+        paddingBottom: 0
     },
 });
 const useStylesCard = makeStyles({
@@ -19,13 +19,16 @@ const useStylesCard = makeStyles({
     }
 });
 
-export default function ContinuousSlider() {
+export default function ContinuousSlider({ zoomIn }) {
     const classesSlider = useStylesSlider();
     const classesCard = useStylesCard();
     const [value, setValue] = React.useState(30);
 
     const handleChange = (event, newValue) => {
+        if (newValue != value)
+            zoomIn(newValue > value ? 1.02 : 0.98);
         setValue(newValue);
+
     };
 
     return (

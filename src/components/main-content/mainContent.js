@@ -22,29 +22,29 @@ export default function MainContent() {
     const [imageIndex, setImageIndex] = React.useState(-1)
     const [anchorEl, setAnchorEl] = React.useState(null)
 
-    const togglePanel = () => {
-        setShowPanels(!showPanels)
-    }
     const handleClick = event => {
         setAnchorEl(event.currentTarget)
     }
     const handleClose = () => {
         setAnchorEl(null)
     }
-    const handleZoom = (event) => {
-        console.log(event);
+    const handleZoom = (zoomNumber) => {
+        console.log(zoomNumber);
+        childRef.current.zoomOnViewerCenter(zoomNumber)
     }
 
     const open = Boolean(anchorEl)
     const id = open ? "simple-popover" : undefined
 
+    const childRef = React.useRef();
+    //
 
     return (
         <Box>
             <Grid container direction="row" spacing={2}>
                 <Grid item xs={12} md={8}>
-                    <Map></Map>
-                    <Button onClick={() => togglePanel()} variant="contained" color="primary">
+                    <Map ref={childRef}></Map>
+                    <Button onClick={() => setShowPanels(!showPanels)} variant="contained" color="primary">
                         Panel Toggle
       </Button>
                 </Grid>
@@ -113,8 +113,8 @@ export default function MainContent() {
                 </Popover>
             </Grid>
             <Grid container direction="row" justify="flex-end" alignItems="flex-end" spacing={2}>
-                <ZoomSlider />
+                <ZoomSlider zoomIn={handleZoom} />
             </Grid>
-        </Box>
+        </Box >
     )
 }

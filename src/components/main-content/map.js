@@ -26,24 +26,14 @@ export default class App extends React.PureComponent {
     this.Viewer.fitSelection(40, 40, 200, 200)
   }
 
-  zoomOnViewerCenter() {
-    this.Viewer.zoomOnViewerCenter(1.1)
+  zoomOnViewerCenter(zoomNumber) {
+    this.Viewer.zoomOnViewerCenter(zoomNumber)
   }
 
   render() {
     return (
       <div>
         {/* Read all the available methods in the documentation */}
-        <button className="btn" onClick={() => this.zoomOnViewerCenter()}>
-          Zoom in
-        </button>
-        <button className="btn" onClick={() => this.fitSelection()}>
-          Zoom area 200x200
-        </button>
-        <button className="btn" onClick={() => this.fitToViewer()}>
-          Fit
-        </button>
-
         <ReactSVGPanZoom
           width={500}
           height={500}
