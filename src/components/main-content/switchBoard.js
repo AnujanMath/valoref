@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SwitchListSecondary() {
+export default function SwitchListSecondary(state) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(['wifi']);
 
@@ -40,7 +40,7 @@ export default function SwitchListSecondary() {
             edge="end"
             style={{ color:"linear-gradient(180deg, #FF7D87 0%, #FF4654 100%) !important"}}
             onChange={handleToggle('wifi')}
-            checked={checked.indexOf('wifi') !== -1}
+            checked={state.toggle}
             inputProps={{ 'aria-labelledby': 'switch-list-label-wifi' }}
           />
         </ListItemSecondaryAction>
@@ -52,7 +52,7 @@ export default function SwitchListSecondary() {
           <Switch
             edge="end"
             onChange={handleToggle('bluetooth')}
-            checked={checked.indexOf('bluetooth') !== -1}
+            checked={state.toggle}
             inputProps={{ 'aria-labelledby': 'switch-list-label-bluetooth' }}
           />
         </ListItemSecondaryAction>
