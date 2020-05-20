@@ -6,19 +6,28 @@ import Slide from "@material-ui/core/Slide"
 import Button from "@material-ui/core/Button"
 import SettingsIcon from "@material-ui/icons/Settings"
 import CloseIcon from "@material-ui/icons/Close"
-import Typography from "@material-ui/core/Typography"
 import Popover from "@material-ui/core/Popover"
 
 import ZoomSlider from "./zoomSlider.js"
-import SwitchListSecondary from "./switchBoard.js"
+import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
+
+import { handleWallToggle, handleLabelToggle } from "../../_actions"
+import { useSelector, useDispatch } from "react-redux"
+
+const imageArray = [
+    "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
+    "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
+    "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/position1.jpg",
+    "https://image.shutterstock.com/image-photo/casual-young-mixed-family-on-600w-358034447.jpg",
+]
+
 export default function MainContent() {
+
+    const wall = useSelector(state => state.settingsReducer.wall);
+    const label = useSelector(state => state.settingsReducer.label);
+    const dispatch = useDispatch();
+
     const [showPanels, setShowPanels] = React.useState(false)
-    const [imageArray, setImageArray] = React.useState([
-        "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
-        "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
-        "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/position1.jpg",
-        "https://image.shutterstock.com/image-photo/casual-young-mixed-family-on-600w-358034447.jpg",
-    ])
     const [imageIndex, setImageIndex] = React.useState(-1)
     const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -43,7 +52,7 @@ export default function MainContent() {
         <Box>
             <Grid container direction="row" spacing={2}>
                 <Grid item xs={12} md={8}>
-                    <Map ref={childRef}></Map>
+                    <Map ref={childRef} label={label} wall={wall}></Map>
                     <Button onClick={() => setShowPanels(!showPanels)} variant="contained" color="primary">
                         Panel Toggle
       </Button>
@@ -86,13 +95,7 @@ export default function MainContent() {
                     variant="contained"
                     style={{ background: "#16191C" }}
                 >
-                    {" "}
-                    {/* I think theres a better way to right align lol front end amature smh */}
-                    {open ? (
-                        <CloseIcon style={{ color: "#7a7a7a" }} />
-                    ) : (
-                            <SettingsIcon style={{ color: "#7a7a7a" }} />
-                        )}
+                    {open ? (<CloseIcon style={{ color: "#7a7a7a" }} />) : (<SettingsIcon style={{ color: "#7a7a7a" }} />)}
                 </Button>
 
                 <Popover
@@ -109,7 +112,7 @@ export default function MainContent() {
                         horizontal: "right",
                     }}
                 >
-                    <SwitchListSecondary />
+                    <SwitchListSecondary wall={wall} label={label} handleWallToggle={() => dispatch(handleWallToggle())} handleLabelToggle={() => dispatch(handleLabelToggle())} />
                 </Popover>
             </Grid>
             <Grid container direction="row" justify="flex-end" alignItems="flex-end" spacing={2}>

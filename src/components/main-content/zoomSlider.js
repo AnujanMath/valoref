@@ -25,7 +25,7 @@ export default function ContinuousSlider({ zoomIn }) {
     const [value, setValue] = React.useState(30);
 
     const handleChange = (event, newValue) => {
-        if (newValue != value)
+        if (newValue !== value)
             zoomIn(newValue > value ? 1.02 : 0.98);
         setValue(newValue);
 

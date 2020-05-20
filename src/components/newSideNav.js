@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    // backgroundColor: theme.palette.background.default,
     backgroundColor: '#1F2327',
     //look into material-ui theming
     padding: theme.spacing(3),
@@ -97,8 +96,8 @@ export default function PermanentDrawerLeft() {
       </Drawer>
 
       <main className={classes.content}>
-        <Sidebar selectedIndex={selectedIndex} showSideBar={showSideBar}></Sidebar>
         <MainContent></MainContent>
+        <Sidebar selectedIndex={selectedIndex} showSideBar={showSideBar}></Sidebar>
       </main>
     </Box>
   )

@@ -31,11 +31,8 @@ const characters = [
 ]
 
 export default function SideBar({ showSideBar, selectedIndex }) {
-  console.log(showSideBar)
-  console.log(selectedIndex)
-  const [state, setState] = React.useState({
-    left: false,
-  })
+
+  const [isOpen, setisOpen] = React.useState(false)
   const classes = useStyles()
 
   const toggleDrawer = () => event => {
@@ -46,7 +43,7 @@ export default function SideBar({ showSideBar, selectedIndex }) {
       return
     }
 
-    setState({ state, left: !state.left })
+    setisOpen({ isOpen, isOpen: !isOpen })
   }
   const FAQ = () => (
     <Box style={{ width: 250, color: "white" }}>
@@ -119,7 +116,6 @@ export default function SideBar({ showSideBar, selectedIndex }) {
 
   return (
     <React.Fragment>
-      {/* <Button onClick={toggleDrawer()}>Settings</Button> */}
       <Drawer
         BackdropProps={{ invisible: true }}
         classes={{ paper: classes.paper }}
