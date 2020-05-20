@@ -7,6 +7,8 @@ import ListItemText from "@material-ui/core/ListItemText"
 import { makeStyles, Box } from "@material-ui/core"
 import ListSubheader from "@material-ui/core/ListSubheader"
 import Typography from "@material-ui/core/Typography"
+import { useSelector, useDispatch } from "react-redux"
+import { handleMapChange, handleAgentChange } from "../_actions"
 
 const useStyles = makeStyles({
   paper: {
@@ -14,6 +16,9 @@ const useStyles = makeStyles({
     backgroundColor: "#16191C",
     boxShadow: "4px 0px 20px",
   },
+  active: {
+    backgroundColor: "red",
+  }
 })
 const maps = ["Haven", "Bind", "Split"]
 
@@ -32,6 +37,9 @@ const characters = [
 
 export default function SideBar({ showSideBar, selectedIndex }) {
 
+  const map = useSelector(state => state.settingsReducer.map);
+  const agent = useSelector(state => state.settingsReducer.agent);
+  const dispatch = useDispatch();
   const [isOpen, setisOpen] = React.useState(false)
   const classes = useStyles()
 
@@ -87,7 +95,7 @@ export default function SideBar({ showSideBar, selectedIndex }) {
         }
       >
         {maps.map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem  classes={{ selected: classes.active }}  onClick={(event) => dispatch(handleMapChange(text))} selected={map == text} button key={text}>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -105,8 +113,8 @@ export default function SideBar({ showSideBar, selectedIndex }) {
         }
       >
         {characters.map((text, index) => (
-          <ListItem button key={text}>
-            {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+          <ListItem  classes={{ selected: classes.active }} onClick={(event) => dispatch(handleAgentChange(text))} selected={agent == text} button key={text}>
+          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
             <ListItemText primary={text} />
           </ListItem>
         ))}

@@ -95,7 +95,7 @@ export default function MainContent() {
                     variant="contained"
                     style={{ background: "#16191C" }}
                 >
-                    {open ? (<CloseIcon style={{ color: "#7a7a7a" }} />) : (<SettingsIcon style={{ color: "#7a7a7a" }} />)}
+                    {open ? (<CloseIcon  style={{ color: "#7a7a7a" }} />) : (<SettingsIcon style={{ color: "#7a7a7a" }} />)}
                 </Button>
 
                 <Popover
