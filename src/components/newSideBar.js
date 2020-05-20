@@ -43,7 +43,7 @@ export default function SideBar({ showSideBar, selectedIndex }) {
       return
     }
 
-    setisOpen({ isOpen, isOpen: !isOpen })
+    setisOpen(!isOpen)
   }
   const FAQ = () => (
     <Box style={{ width: 250, color: "white" }}>
@@ -61,13 +61,13 @@ export default function SideBar({ showSideBar, selectedIndex }) {
         <ListSubheader>
           <ListItemText>
 
-            <Typography style={{ color: "white" }}variant="h6">
+            <Typography style={{ color: "white" }} variant="h6">
               How do I submit my own tip and screenshots?
             </Typography>
             <Typography style={{ color: "#88898A" }} variant="body1" color="textSecondary">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede
             </Typography>
-            
+
           </ListItemText>
         </ListSubheader>
       </List>

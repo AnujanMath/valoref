@@ -2,7 +2,7 @@ import React from "react"
 import { createStore } from "redux"
 import { Provider } from "react-redux"
 
-import allReducers from "../reducers"
+import allReducers from "../_reducers"
 import Sidenav from "../components/newSideNav"
 
 let store = createStore(
