@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     boxShadow: "4px 0px 20px",
   },
   active: {
-    backgroundColor: "red",
+    backgroundColor: "rgba(255, 255, 255, 0.16) !important"
   }
 })
 const maps = ["Haven", "Bind", "Split"]
@@ -113,7 +113,7 @@ export default function SideBar({ showSideBar, selectedIndex }) {
         }
       >
         {characters.map((text, index) => (
-          <ListItem  classes={{ selected: classes.active }} onClick={(event) => dispatch(handleAgentChange(text))} selected={agent == text} button key={text}>
+          <ListItem  classes={{ selected: classes.active }}onClick={(event) => dispatch(handleAgentChange(text))} selected={agent == text} button key={text}>
           {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
             <ListItemText primary={text} />
           </ListItem>
