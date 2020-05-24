@@ -8,7 +8,7 @@ import SettingsIcon from "@material-ui/icons/Settings"
 import CloseIcon from "@material-ui/icons/Close"
 import Popover from "@material-ui/core/Popover"
 import { graphql, useStaticQuery } from "gatsby"
-import Image from "gatsby-image"
+import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
 import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
 
@@ -34,7 +34,6 @@ export default function MainContent() {
       }
     }
   `)
-  const clImage = data.cloudinaryMedia.secure_url
 
   const wall = useSelector(state => state.settingsReducer.wall)
   const label = useSelector(state => state.settingsReducer.label)
@@ -79,7 +78,7 @@ export default function MainContent() {
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
                 <CardContent onClick={() => console.log("click")}>
-                  <Image
+                  <Img
                     fixed={data.file.childCloudinaryAsset.fixed}
                     alt="banner"
                   />
@@ -96,7 +95,7 @@ export default function MainContent() {
                     style={{ backgroundColor: "#16191C", cursor: "pointer" }}
                   >
                     <CardContent>
-                      <Image
+                      <Img
                         fixed={data.file.childCloudinaryAsset.fixed}
                         alt="banner"
                       />
