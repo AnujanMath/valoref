@@ -11,7 +11,7 @@ import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
 import Typography from "@material-ui/core/Typography"
-
+import handleSideChange from "../../_actions"
 import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
 import ToggleButton from "@material-ui/lab/ToggleButton"
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
@@ -37,6 +37,7 @@ export default function MainContent() {
       }
     }
   `)
+  const side = useSelector(state => state.settingsReducer.side)
 
   const wall = useSelector(state => state.settingsReducer.wall)
   const label = useSelector(state => state.settingsReducer.label)
@@ -45,11 +46,7 @@ export default function MainContent() {
   const [showPanels, setShowPanels] = React.useState(false)
   const [imageIndex, setImageIndex] = React.useState(-1)
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const [alignment, setAlignment] = React.useState("left")
 
-  const handleAlignment = (event, newAlignment) => {
-    setAlignment(newAlignment)
-  }
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -59,6 +56,10 @@ export default function MainContent() {
   const handleZoom = zoomNumber => {
     console.log(zoomNumber)
     childRef.current.zoomOnViewerCenter(zoomNumber)
+  }
+  const handleChange = (event, side) => {
+    console.log(side)
+    dispatch(handleSideChange(side))
   }
 
   const open = Boolean(anchorEl)
@@ -155,17 +156,18 @@ export default function MainContent() {
             handleLabelToggle={() => dispatch(handleLabelToggle())}
           />
           <ToggleButtonGroup
-            value={alignment}
+            value={side}
             exclusive
-            onChange={handleAlignment}
             style={{ backgroundColor: "#16191C" }}
+            onChange={handleChange}
           >
-            <ToggleButton value="left" aria-label="left aligned">{/* add selected effects and color */}
+            <ToggleButton value="attack" aria-label="left aligned">
+              {/* add selected effects and colorx */}
               <Typography style={{ color: "white" }} variant="h6">
                 Attack
               </Typography>
             </ToggleButton>
-            <ToggleButton value="right" aria-label="right aligned">
+            <ToggleButton value="defend" aria-label="right aligned">
               <Typography style={{ color: "white" }} variant="h6">
                 Defend
               </Typography>

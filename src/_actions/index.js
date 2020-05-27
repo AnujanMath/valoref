@@ -25,3 +25,11 @@ export const handleAgentChange = choice => {
     choice: choice,
   }
 }
+export const handleSideChange = choice => {
+  console.log(choice)
+
+  return {
+    type: "SET_SIDE",
+    choice: choice,
+  }
+}

@@ -3,6 +3,7 @@ const initialState = {
   label: true,
   map: "",
   agent: "",
+  side: "defend"
 }
 
 const settingsReducer = (state = initialState, action) => {
@@ -15,6 +16,9 @@ const settingsReducer = (state = initialState, action) => {
     case "SET_MAP":
       console.log(state, action)
       return { ...state, map: action.choice }
+    case "SET_SIDE":
+      console.log(state, action)
+      return { ...state, side: action.choice }
     case "SET_AGENT":
       console.log(state, action)
 
