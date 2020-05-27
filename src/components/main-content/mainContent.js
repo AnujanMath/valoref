@@ -10,8 +10,11 @@ import Popover from "@material-ui/core/Popover"
 import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
-import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
+import Typography from "@material-ui/core/Typography"
 
+import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
+import ToggleButton from "@material-ui/lab/ToggleButton"
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
 import { handleWallToggle, handleLabelToggle } from "../../_actions"
 import { useSelector, useDispatch } from "react-redux"
 
@@ -42,7 +45,11 @@ export default function MainContent() {
   const [showPanels, setShowPanels] = React.useState(false)
   const [imageIndex, setImageIndex] = React.useState(-1)
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [alignment, setAlignment] = React.useState("left")
 
+  const handleAlignment = (event, newAlignment) => {
+    setAlignment(newAlignment)
+  }
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -147,6 +154,23 @@ export default function MainContent() {
             handleWallToggle={() => dispatch(handleWallToggle())}
             handleLabelToggle={() => dispatch(handleLabelToggle())}
           />
+          <ToggleButtonGroup
+            value={alignment}
+            exclusive
+            onChange={handleAlignment}
+            style={{ backgroundColor: "#16191C" }}
+          >
+            <ToggleButton value="left" aria-label="left aligned">{/* add selected effects and color */}
+              <Typography style={{ color: "white" }} variant="h6">
+                Attack
+              </Typography>
+            </ToggleButton>
+            <ToggleButton value="right" aria-label="right aligned">
+              <Typography style={{ color: "white" }} variant="h6">
+                Defend
+              </Typography>
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Popover>
       </Grid>
       <Grid
