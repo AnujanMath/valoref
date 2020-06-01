@@ -11,11 +11,10 @@ import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
 import Typography from "@material-ui/core/Typography"
-import handleSideChange from "../../_actions"
 import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
 import ToggleButton from "@material-ui/lab/ToggleButton"
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
-import { handleWallToggle, handleLabelToggle } from "../../_actions"
+import { handleWallToggle, handleLabelToggle, handleSideChange } from "../../_actions"
 import { useSelector, useDispatch } from "react-redux"
 
 const imageArray = [
@@ -44,7 +43,6 @@ export default function MainContent() {
   const dispatch = useDispatch()
 
   const [showPanels, setShowPanels] = React.useState(false)
-  const [imageIndex, setImageIndex] = React.useState(-1)
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleClick = event => {
@@ -59,6 +57,7 @@ export default function MainContent() {
   }
   const handleChange = (event, side) => {
     console.log(side)
+    console.log('handle')
     dispatch(handleSideChange(side))
   }
 
@@ -70,8 +69,8 @@ export default function MainContent() {
 
   return (
     <Box>
-      <Grid container direction="row" spacing={2}>
-        <Grid item xs={12} md={8}>
+      <Grid container direction="row" spacing={2} >
+        <Grid item xs={12} md={showPanels ? 8 : 12}>
           <Map ref={childRef} label={label} wall={wall}></Map>
           <Button
             onClick={() => setShowPanels(!showPanels)}
@@ -131,8 +130,8 @@ export default function MainContent() {
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
           ) : (
-            <SettingsIcon style={{ color: "#7a7a7a" }} />
-          )}
+              <SettingsIcon style={{ color: "#7a7a7a" }} />
+            )}
         </Button>
 
         <Popover
@@ -159,7 +158,7 @@ export default function MainContent() {
             value={side}
             exclusive
             style={{ backgroundColor: "#16191C" }}
-            onChange={handleChange}
+            onChange={() => dispatch(handleSideChange(side))}
           >
             <ToggleButton value="attack" aria-label="left aligned">
               {/* add selected effects and colorx */}

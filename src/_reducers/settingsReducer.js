@@ -21,8 +21,7 @@ const settingsReducer = (state = initialState, action) => {
       return { ...state, side: action.choice }
     case "SET_AGENT":
       console.log(state, action)
-
-      return { ...state, agent: action.choice }
+      return { ...state, agent: action.payload }
 
     default:
       return state
