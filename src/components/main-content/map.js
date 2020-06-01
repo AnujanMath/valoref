@@ -1,4 +1,5 @@
 import React from "react"
+import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux"
 import { INITIAL_VALUE, ReactSVGPanZoom, TOOL_NONE } from "react-svg-pan-zoom"
 import { AutoSizer } from "react-virtualized"
@@ -7,24 +8,40 @@ import Fade from "@material-ui/core/Fade"
 export default class App extends React.PureComponent {
   state = { tool: TOOL_NONE, value: INITIAL_VALUE }
   Viewer = null
+  toolBarSettings = { position: 'none' }
+
+  keyDown = e => {
+    if (e.keyCode === 32 && this.Viewer.getValue().focus) {
+      this.setState({ tool: 'pan' })
+    }
+
+  }
+  keyUp = e => {
+    if (e.keyCode === 32)
+      this.setState({ tool: 'none' })
+  }
+
 
   componentDidMount() {
+    document.addEventListener("keydown", this.keyDown, false);
+    document.addEventListener("keyup", this.keyUp, false);
     setTimeout(() => {
       //dirty fix for this function running before dom is loaded
-      this.Viewer.fitToViewer()
+      this.Viewer.fitToViewer("center", "center")
     }, 0)
   }
 
+
   changeTool(nextTool) {
+    console.log(nextTool)
     this.setState({ tool: nextTool })
   }
 
   changeValue(nextValue) {
     this.setState({ value: nextValue })
   }
-
   fitToViewer() {
-    this.Viewer.fitToViewer()
+    this.Viewer.fitToViewer("center", "center")
   }
 
   fitSelection() {
@@ -39,17 +56,18 @@ export default class App extends React.PureComponent {
     return (
       //find a way to make width more responsive
       //rerender on window resize
-      <div style={{ width: "100%", height: "80vh" }}>
+      <div style={{ width: "100%", height: "75vh" }}>
         {/* Read all the available methods in the documentation */}
         <Fade in={true}>
           {/* change the fit to viewer thing later on when we make a decision */}
-          <AutoSizer onResize={() => this.Viewer ? this.fitToViewer() : null}>
+          <AutoSizer onResize={() => this.Viewer ? this.Viewer.fitToViewer("center", "center") : null}>
             {(({ width, height }) => width === 0 || height === 0 ? null : (
               <ReactSVGPanZoom
                 width={width}
                 height={height}
                 ref={Viewer => (this.Viewer = Viewer)}
                 tool={this.state.tool}
+                toolbarProps={this.toolBarSettings}
                 background="none"
                 SVGBackground="none"
                 preventPanOutside={true}
@@ -643,7 +661,7 @@ export default class App extends React.PureComponent {
             ))}
           </AutoSizer>
         </Fade>
-      </div>
+      </div >
     )
   }
 }

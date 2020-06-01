@@ -1,6 +1,5 @@
 //responsible for handling DISPATCH
 export const handleWallToggle = () => {
-  console.log("asdflkjsa")
   return {
     type: "TOGGLE_WALL",
   }
@@ -30,12 +29,18 @@ export const handleSideChange = choice => {
 
   return {
     type: "SET_SIDE",
-    choice: choice,
+    payload: choice,
   }
 }
 export const handlePageChange = index => {
   return {
     type: "SET_PAGE",
     payload: index
+  }
+}
+export const handleZoom = option => {
+  return {
+    type: "SET_ZOOM",
+    payload: option
   }
 }

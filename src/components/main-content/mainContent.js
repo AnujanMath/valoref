@@ -10,6 +10,7 @@ import Popover from "@material-ui/core/Popover"
 import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
+import ZoomButtons from "./zoomButtons.js"
 import Typography from "@material-ui/core/Typography"
 import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
 import ToggleButton from "@material-ui/lab/ToggleButton"
@@ -37,13 +38,13 @@ export default function MainContent() {
     }
   `)
   const side = useSelector(state => state.settingsReducer.side)
-
   const wall = useSelector(state => state.settingsReducer.wall)
   const label = useSelector(state => state.settingsReducer.label)
   const dispatch = useDispatch()
 
   const [showPanels, setShowPanels] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [fullCol, setFullCol] = React.useState(false)
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
@@ -51,29 +52,46 @@ export default function MainContent() {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const handleZoom = zoomNumber => {
-    console.log(zoomNumber)
-    childRef.current.zoomOnViewerCenter(zoomNumber)
+  const handleZoom = option => {
+    console.log(option)
+    switch (option) {
+      case 'zoom in':
+        childRef.current.zoomOnViewerCenter(1.1)
+        break;
+      case 'zoom out':
+        childRef.current.zoomOnViewerCenter(0.9)
+        break;
+
+      case 'fit':
+        childRef.current.fitToViewer()
+        break;
+      default:
+        break;
+    }
   }
-  const handleChange = (event, side) => {
-    console.log(side)
-    console.log('handle')
-    dispatch(handleSideChange(side))
+  const changeColSize = () => {
+    setShowPanels(!showPanels);
+    if (showPanels) {
+      setTimeout(() => {
+        setFullCol(!showPanels);
+      }, 225)
+    } else {
+      setFullCol(!showPanels);
+    }
   }
 
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
 
   const childRef = React.useRef()
-  //
 
   return (
-    <Box>
-      <Grid container direction="row" spacing={2} >
-        <Grid item xs={12} md={showPanels ? 8 : 12}>
+    <Box >
+      <Grid container direction="row" spacing={1} >
+        <Grid item xs={12} md={fullCol ? 8 : 12}>
           <Map ref={childRef} label={label} wall={wall}></Map>
           <Button
-            onClick={() => setShowPanels(!showPanels)}
+            onClick={changeColSize}
             variant="contained"
             color="primary"
           >
@@ -89,7 +107,6 @@ export default function MainContent() {
                     fixed={data.file.childCloudinaryAsset.fixed}
                     alt="banner"
                   />
-                  ;{" "}
                 </CardContent>
               </Card>
             </Grid>
@@ -125,7 +142,7 @@ export default function MainContent() {
           aria-describedby={id}
           onClick={handleClick}
           variant="contained"
-          style={{ background: "#16191C" }}
+          color="primary"
         >
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
@@ -173,15 +190,7 @@ export default function MainContent() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Popover>
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="flex-end"
-        alignItems="flex-end"
-        spacing={2}
-      >
-        <ZoomSlider zoomIn={handleZoom} />
+        <ZoomButtons zoom={handleZoom} />
       </Grid>
     </Box>
   )

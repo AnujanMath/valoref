@@ -19,7 +19,7 @@ export default function SwitchBoard() {
             aria-describedby={id}
             onClick={handleClick}
             variant="contained"
-            style={{ background: "#16191C" }}
+            color="primary"
         >
             {open ? (<CloseIcon style={{ color: "#7a7a7a" }} />) : (<SettingsIcon style={{ color: "#7a7a7a" }} />)}
         </Button>

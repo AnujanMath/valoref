@@ -15,10 +15,10 @@ const settingsReducer = (state = initialState, action) => {
       return { ...state, label: !state.label }
     case "SET_MAP":
       console.log(state, action)
-      return { ...state, map: action.choice }
+      return { ...state, map: action.payload }
     case "SET_SIDE":
       console.log(state, action)
-      return { ...state, side: action.choice }
+      return { ...state, side: action.payload }
     case "SET_AGENT":
       console.log(state, action)
       return { ...state, agent: action.payload }
