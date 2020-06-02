@@ -2,9 +2,7 @@ const zoomOptions = {
     option: 'fit'
 }
 
-const showSideBarReducer = (state = zoomOptions, action) => {
-    console.log(state);
-    console.log(action);
+const zoomReducer = (state = zoomOptions, action) => {
     switch (action.type) {
         case 'SET_ZOOM':
             state = action.payload;
@@ -13,4 +11,4 @@ const showSideBarReducer = (state = zoomOptions, action) => {
             return state;
     }
 }
-export default showSideBarReducer
+export default zoomReducer

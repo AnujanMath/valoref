@@ -22,6 +22,7 @@ const theme = createMuiTheme({
 });
 export default function IndexPage() {
   return (
+    // figure out how to remove srollbar
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <Sidenav />

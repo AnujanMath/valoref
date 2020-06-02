@@ -44,3 +44,9 @@ export const handleZoom = option => {
     payload: option
   }
 }
+export const handleAbilityChange = id => {
+  return {
+    type: "SET_ABILITY_ID",
+    payload: id
+  }
+}

@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#1F2327',
     //look into material-ui theming
     padding: theme.spacing(3),
+    height: '100vh',
   },
 }))
 
