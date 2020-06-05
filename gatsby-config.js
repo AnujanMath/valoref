@@ -46,7 +46,7 @@ module.exports = {
         cloudName: process.env.CLOUDINARY_CLOUD_NAME,
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
-        uploadFolder: "gatsby-test",
+        uploadFolder: "valoref",
       },
     },
     {
@@ -56,7 +56,8 @@ module.exports = {
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
         resourceType: `image`,
-        prefix: `gatsby-source-cloudinary/`
+        prefix: `valoref/`,
+        maxResults: 100
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

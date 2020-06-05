@@ -15,34 +15,40 @@ import Typography from "@material-ui/core/Typography"
 import SwitchListSecondary from "./switchBoard/switchBoardContent.js"
 import ToggleButton from "@material-ui/lab/ToggleButton"
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
-import { handleWallToggle, handleLabelToggle, handleSideChange } from "../../_actions"
+import {
+  handleWallToggle,
+  handleLabelToggle,
+  handleSideChange,
+} from "../../_actions"
 import { useSelector, useDispatch } from "react-redux"
-
-const imageArray = [
-  "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
-  "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
-  "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/position1.jpg",
-  "https://image.shutterstock.com/image-photo/casual-young-mixed-family-on-600w-358034447.jpg",
-]
 
 export default function MainContent() {
   const data = useStaticQuery(graphql`
-    query {
-      file(name: { eq: "gatsby-icon" }) {
-        childCloudinaryAsset {
-          fixed {
-            ...CloudinaryAssetFixed
+    query CloudinaryImage {
+      allCloudinaryMedia(
+        filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
+      ) {
+        edges {
+          node {
+            secure_url
           }
         }
       }
     }
   `)
+  const imageArray = data.allCloudinaryMedia.edges
+  /*   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
+  "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
+  "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/position1.jpg",
+  "https://image.shutterstock.com/image-photo/casual-young-mixed-family-on-600w-358034447.jpg", */
+
   const side = useSelector(state => state.settingsReducer.side)
   const wall = useSelector(state => state.settingsReducer.wall)
   const label = useSelector(state => state.settingsReducer.label)
   const showPanels = useSelector(state => state.abilityReducer.showPanel)
   const selectedAbility = useSelector(state => state.abilityReducer.id)
   const dispatch = useDispatch()
+  const [imageIndex, setImageIndex] = React.useState(0)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -55,18 +61,18 @@ export default function MainContent() {
   const handleZoom = option => {
     console.log(option)
     switch (option) {
-      case 'zoom in':
+      case "zoom in":
         childRef.current.zoomOnViewerCenter(1.1)
-        break;
-      case 'zoom out':
+        break
+      case "zoom out":
         childRef.current.zoomOnViewerCenter(0.9)
-        break;
+        break
 
-      case 'fit':
+      case "fit":
         childRef.current.fitToViewer()
-        break;
+        break
       default:
-        break;
+        break
     }
   }
 
@@ -77,8 +83,8 @@ export default function MainContent() {
   const childRef = React.useRef()
 
   return (
-    <Box >
-      <Grid container direction="row" spacing={1} >
+    <Box>
+      <Grid container direction="row" spacing={1}>
         <Grid item xs>
           <Map ref={childRef} label={label} wall={wall}></Map>
         </Grid>
@@ -88,10 +94,8 @@ export default function MainContent() {
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
                 <CardContent onClick={() => console.log("click")}>
-                  <Img
-                    fixed={data.file.childCloudinaryAsset.fixed}
-                    alt="banner"
-                  />
+                  <img src={imageArray[imageIndex].node.secure_url}></img>
+
                   <h1 style={{ color: "white" }}>{selectedAbility}</h1>
                 </CardContent>
               </Card>
@@ -105,9 +109,10 @@ export default function MainContent() {
                     style={{ backgroundColor: "#16191C", cursor: "pointer" }}
                   >
                     <CardContent>
-                      <Img
-                        fixed={data.file.childCloudinaryAsset.fixed}
-                        alt="banner"
+                      <img
+                        style={{ width: "auto", height: "auto" }}
+                        onClick={() => setImageIndex(index)}
+                        src={image.node.secure_url}
                       />
                     </CardContent>
                   </Card>
@@ -133,8 +138,8 @@ export default function MainContent() {
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
           ) : (
-              <SettingsIcon style={{ color: "#7a7a7a" }} />
-            )}
+            <SettingsIcon style={{ color: "#7a7a7a" }} />
+          )}
         </Button>
 
         <Popover
