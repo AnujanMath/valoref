@@ -23,7 +23,7 @@ import {
 import { useSelector, useDispatch } from "react-redux"
 
 export default function MainContent() {
-  const data = useStaticQuery(graphql`
+/*   const data = useStaticQuery(graphql`
     query CloudinaryImage {
       allCloudinaryMedia(
         filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
@@ -35,8 +35,8 @@ export default function MainContent() {
         }
       }
     }
-  `)
-  const imageArray = data.allCloudinaryMedia.edges
+  `) */
+
   /*   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/position1.jpg",
@@ -52,6 +52,7 @@ export default function MainContent() {
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
+  const imageArray = useSelector(state => state.imageArray)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }

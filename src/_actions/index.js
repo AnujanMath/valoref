@@ -50,3 +50,10 @@ export const handleAbilityChange = id => {
     payload: id
   }
 }
+
+export const handleQuery = result => {
+  return {
+    type: "RETURN_QUERY",
+    payload: result
+  }
+}
