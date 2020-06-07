@@ -44,12 +44,22 @@ export const handleZoom = option => {
     payload: option
   }
 }
-export const handleAbilityChange = id => {
+const handleAbilityChange = id => {
+  console.log(id);
   return {
     type: "SET_ABILITY_ID",
     payload: id
   }
 }
+
+//change ability with thunk
+export const changeAbility = id => dispatch => {
+  dispatch(handleAbilityChange(id))
+  //add any other function/query you want to run here
+}
+
+//return Promise.resolve();
+
 
 export const handleQuery = result => {
   return {

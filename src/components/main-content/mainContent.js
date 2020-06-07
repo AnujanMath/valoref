@@ -59,35 +59,15 @@ export default function MainContent() {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const handleZoom = option => {
-    console.log(option)
-    switch (option) {
-      case "zoom in":
-        childRef.current.zoomOnViewerCenter(1.1)
-        break
-      case "zoom out":
-        childRef.current.zoomOnViewerCenter(0.9)
-        break
-
-      case "fit":
-        childRef.current.fitToViewer()
-        break
-      default:
-        break
-    }
-  }
 
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
-
-  //figure out how to use refs with functional components
-  const childRef = React.useRef()
 
   return (
     <Box>
       <Grid container direction="row" spacing={1}>
         <Grid item xs>
-          <Map ref={childRef} label={label} wall={wall}></Map>
+          <Map  label={label} wall={wall}></Map>
         </Grid>
         {/* TURN THE SLIDE IN CARDS INTO A FUNCTIONAL COMPONENT */}
         <Slide in={showPanels} mountOnEnter unmountOnExit>

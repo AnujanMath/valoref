@@ -1,10 +1,10 @@
 import React from "react"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { handleAbilityChange } from "../../_actions"
+import { changeAbility } from "../../_actions"
 import Fade from "@material-ui/core/Fade"
 
-export default function Map({ ref, label, wall }) {
+export default function Map({ label, wall }) {
   const options = { limitToWrapper: true }
   const doubleClick = { disabled: true }
 
@@ -25,7 +25,7 @@ export default function Map({ ref, label, wall }) {
           </div>
           <TransformComponent>
             <Fade in={true}>
-              <MapContent label={label} wall={wall} setTransform={setTransform} />
+              <MapContent label={label} wall={wall} setTransform={setTransform} resetTransform={resetTransform} />
             </Fade>
           </TransformComponent>
         </React.Fragment>
@@ -35,21 +35,21 @@ export default function Map({ ref, label, wall }) {
   )
 }
 
-function MapContent({ label, wall, setTransform }) {
+function MapContent({ label, wall, setTransform, resetTransform }) {
+  const dispatch = useDispatch();
+  const showPanels = useSelector(state => state.abilityReducer.showPanel);
 
   const click = e => {
     console.log(e.target.transform.baseVal[0].matrix);
-    dispatch(handleAbilityChange(e.target.id));
-    //look into redux thunk
-    //setTransform(-900, -800, 'easeOut');
-    
+    dispatch(changeAbility(e.target.id));
+    setTimeout(() => { showPanels ? setTransform(-400, -400, 2, 200, 'easeOut') : resetTransform() }, 300)
   }
-  const dispatch = useDispatch();
+
 
   return (
     <svg
-      width="100%"
-      height="80vh"
+      width={'100%'}
+      height={window.innerHeight}
       viewBox="0 0 798 887"
     >
       <path
