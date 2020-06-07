@@ -23,7 +23,7 @@ import {
 import { useSelector, useDispatch } from "react-redux"
 
 export default function MainContent() {
-/*   const data = useStaticQuery(graphql`
+  /*   const data = useStaticQuery(graphql`
     query CloudinaryImage {
       allCloudinaryMedia(
         filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
@@ -94,16 +94,18 @@ export default function MainContent() {
           <Grid container direction="column" item xs={12} md={4} spacing={2}>
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
-                <CardContent onClick={() => console.log("click")}>
-                  <img src={imageArray[imageIndex].node.secure_url}></img>
+                {imageArray && (
+                  <CardContent onClick={() => console.log("click")}>
+                    <img src={imageArray[imageIndex].node.secure_url}></img>
 
-                  <h1 style={{ color: "white" }}>{selectedAbility}</h1>
-                </CardContent>
+                    <h1 style={{ color: "white" }}>{selectedAbility}</h1>
+                  </CardContent>
+                )}
               </Card>
             </Grid>
             <Grid container item spacing={2}>
               <div></div>
-              {imageArray.map((image, index) => (
+              {imageArray && imageArray.map((image, index) => (
                 <Grid item xs={6} key={index}>
                   <Card
                     raised
