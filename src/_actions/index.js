@@ -1,3 +1,5 @@
+import { useLazyQuery } from "@apollo/client";
+import gql from "graphql-tag";
 //responsible for handling DISPATCH
 export const handleWallToggle = () => {
   return {
@@ -35,20 +37,20 @@ export const handleSideChange = choice => {
 export const handlePageChange = index => {
   return {
     type: "SET_PAGE",
-    payload: index
+    payload: index,
   }
 }
 export const handleZoom = option => {
   return {
     type: "SET_ZOOM",
-    payload: option
+    payload: option,
   }
 }
 const handleAbilityChange = id => {
-  console.log(id);
+  console.log(id)
   return {
     type: "SET_ABILITY_ID",
-    payload: id
+    payload: id,
   }
 }
 
@@ -56,14 +58,27 @@ const handleAbilityChange = id => {
 export const changeAbility = id => dispatch => {
   dispatch(handleAbilityChange(id))
   //add any other function/query you want to run here
+  const data = useLazyQuery(gql`
+    query CloudinaryImage {
+      allCloudinaryMedia(
+        filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
+      ) {
+        edges {
+          node {
+            secure_url
+          }
+        }
+      }
+    }
+  `)
+  dispatch(handleQuery(data.allCloudinaryMedia.edges))
 }
 
 //return Promise.resolve();
 
-
 export const handleQuery = result => {
   return {
     type: "RETURN_QUERY",
-    payload: result
+    payload: result,
   }
 }
