@@ -8,6 +8,7 @@ import SettingsIcon from "@material-ui/icons/Settings"
 import CloseIcon from "@material-ui/icons/Close"
 import Popover from "@material-ui/core/Popover"
 import { graphql, useStaticQuery } from "gatsby"
+import { makeStyles } from '@material-ui/core/styles';
 import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
 import ZoomButtons from "./zoomButtons.js"
@@ -23,7 +24,18 @@ import {
 } from "../../_actions"
 import { useSelector, useDispatch } from "react-redux"
 
+const useCardContentStyles = makeStyles({
+  root: {
+    padding: 0,
+    '&:last-child': {
+      paddingBottom: 0,
+    },
+  },
+});
+
 export default function MainContent() {
+
+
   const data = useStaticQuery(graphql`
     query CloudinaryImage {
       allCloudinaryMedia(
@@ -65,6 +77,8 @@ export default function MainContent() {
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
 
+  const classesCardContent = useCardContentStyles();
+
   return (
     <Box>
       <Grid container direction="row" spacing={1}>
@@ -73,20 +87,18 @@ export default function MainContent() {
         </Grid>
         {/* TURN THE SLIDE IN CARDS INTO A FUNCTIONAL COMPONENT */}
         <Slide in={showPanels} mountOnEnter unmountOnExit>
-          <Grid container direction="column" item xs={12} md={4} spacing={2}>
+          <Grid container direction="column" item xs={12} md={5} spacing={2}>
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
                 {imageArray && (
-                  <CardContent onClick={() => console.log("click")}>
+                  <CardContent className={classesCardContent.root}>
                     <img src={imageArray[imageIndex].node.secure_url}></img>
-
-                    <h1 style={{ color: "white" }}>{selectedAbility}</h1>
+                    {/* <p style={{ color: "white" }}>{selectedAbility}</p> */}
                   </CardContent>
                 )}
               </Card>
             </Grid>
             <Grid container item spacing={2}>
-              <div></div>
               {imageArray &&
                 imageArray.map((image, index) => (
                   <Grid item xs={6} key={index}>
@@ -94,7 +106,7 @@ export default function MainContent() {
                       raised
                       style={{ backgroundColor: "#16191C", cursor: "pointer" }}
                     >
-                      <CardContent>
+                      <CardContent className={classesCardContent.root}>
                         <img
                           style={{ width: "auto", height: "auto" }}
                           onClick={() => setImageIndex(index)}
@@ -124,8 +136,8 @@ export default function MainContent() {
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
           ) : (
-            <SettingsIcon style={{ color: "#7a7a7a" }} />
-          )}
+              <SettingsIcon style={{ color: "#7a7a7a" }} />
+            )}
         </Button>
 
         <Popover
