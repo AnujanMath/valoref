@@ -18,12 +18,13 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
 import {
   handleWallToggle,
   handleLabelToggle,
+  handleQuery,
   handleSideChange,
 } from "../../_actions"
 import { useSelector, useDispatch } from "react-redux"
 
 export default function MainContent() {
-  /*   const data = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     query CloudinaryImage {
       allCloudinaryMedia(
         filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
@@ -35,7 +36,8 @@ export default function MainContent() {
         }
       }
     }
-  `) */
+  `)
+
 
   /*   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
@@ -49,16 +51,16 @@ export default function MainContent() {
   const selectedAbility = useSelector(state => state.abilityReducer.id)
   const dispatch = useDispatch()
   const [imageIndex, setImageIndex] = React.useState(0)
-
   const [anchorEl, setAnchorEl] = React.useState(null)
 
-  const imageArray = useSelector(state => state.imageArray)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
+  dispatch(handleQuery(data.allCloudinaryMedia.edges)) //where we send the query to the store
+  const imageArray = useSelector(state => state.settingsReducer.imageArray)
 
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
@@ -67,7 +69,7 @@ export default function MainContent() {
     <Box>
       <Grid container direction="row" spacing={1}>
         <Grid item xs>
-          <Map  label={label} wall={wall}></Map>
+          <Map label={label} wall={wall}></Map>
         </Grid>
         {/* TURN THE SLIDE IN CARDS INTO A FUNCTIONAL COMPONENT */}
         <Slide in={showPanels} mountOnEnter unmountOnExit>
@@ -85,22 +87,23 @@ export default function MainContent() {
             </Grid>
             <Grid container item spacing={2}>
               <div></div>
-              {imageArray && imageArray.map((image, index) => (
-                <Grid item xs={6} key={index}>
-                  <Card
-                    raised
-                    style={{ backgroundColor: "#16191C", cursor: "pointer" }}
-                  >
-                    <CardContent>
-                      <img
-                        style={{ width: "auto", height: "auto" }}
-                        onClick={() => setImageIndex(index)}
-                        src={image.node.secure_url}
-                      />
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+              {imageArray &&
+                imageArray.map((image, index) => (
+                  <Grid item xs={6} key={index}>
+                    <Card
+                      raised
+                      style={{ backgroundColor: "#16191C", cursor: "pointer" }}
+                    >
+                      <CardContent>
+                        <img
+                          style={{ width: "auto", height: "auto" }}
+                          onClick={() => setImageIndex(index)}
+                          src={image.node.secure_url}
+                        />
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
         </Slide>

@@ -1,5 +1,3 @@
-import { useLazyQuery } from "@apollo/client";
-import gql from "graphql-tag";
 //responsible for handling DISPATCH
 export const handleWallToggle = () => {
   return {
@@ -26,6 +24,13 @@ export const handleAgentChange = choice => {
     payload: choice,
   }
 }
+export const handleQuery = result => {
+  return {
+    type: "RETURN_QUERY",
+    payload: result,
+  }
+}
+
 export const handleSideChange = choice => {
   console.log(choice)
 
@@ -54,11 +59,13 @@ const handleAbilityChange = id => {
   }
 }
 
+
+
 //change ability with thunk
 export const changeAbility = id => dispatch => {
   dispatch(handleAbilityChange(id))
   //add any other function/query you want to run here
-  const data = useLazyQuery(gql`
+/*   const data = useLazyQuery(gql`
     query CloudinaryImage {
       allCloudinaryMedia(
         filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
@@ -71,14 +78,7 @@ export const changeAbility = id => dispatch => {
       }
     }
   `)
-  dispatch(handleQuery(data.allCloudinaryMedia.edges))
+  dispatch(handleQuery(data.allCloudinaryMedia.edges)) */
 }
 
 //return Promise.resolve();
-
-export const handleQuery = result => {
-  return {
-    type: "RETURN_QUERY",
-    payload: result,
-  }
-}

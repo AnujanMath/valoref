@@ -1,19 +1,18 @@
 const abilityOptions = {
-    id: null,
-    showPanel: false,
+  id: null,
+  showPanel: false,
 }
 
 const abilityReducer = (state = abilityOptions, action) => {
-    console.log(action.payload)
-    switch (action.type) {
-
-        case 'SET_ABILITY_ID':
-            if (action.payload == state.id || !state.showPanel)
-                state.showPanel = !state.showPanel;
-            state.id = action.payload;
-            return state;
-        default:
-            return state;
-    }
+  console.log(action.payload, action.type)
+  switch (action.type) {
+    case "SET_ABILITY_ID":
+      if (action.payload == state.id || !state.showPanel)
+        state.showPanel = !state.showPanel
+      state.id = action.payload
+      return state
+    default:
+      return state
+  }
 }
 export default abilityReducer
