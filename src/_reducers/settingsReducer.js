@@ -1,8 +1,8 @@
 const initialState = {
   wall: false,
   label: true,
-  map: "",
-  agent: "",
+  map: "Haven",
+  agent: "Cypher",
   side: "defend",
   imageArray: []
 }

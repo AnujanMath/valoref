@@ -55,6 +55,9 @@ export default function MainContent() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const handleSideClick = (e, newSide) => {
+    dispatch(handleSideChange(newSide))
+  }
   const imageArray = useSelector(state => state.settingsReducer.imageArray)
 
   const open = Boolean(anchorEl)
@@ -78,8 +81,8 @@ export default function MainContent() {
                     {/*                     <img src={imageArray[imageIndex].node.secure_url}></img>
                      */}{" "}
                     <Image
-                          cloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
-                          publicId={imageArray[0]}
+                      cloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+                      publicId={imageArray[0]}
 
                     />
                     {/* <p style={{ color: "white" }}>{selectedAbility}</p> */}
@@ -130,8 +133,8 @@ export default function MainContent() {
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
           ) : (
-            <SettingsIcon style={{ color: "#7a7a7a" }} />
-          )}
+              <SettingsIcon style={{ color: "#7a7a7a" }} />
+            )}
         </Button>
 
         <Popover
@@ -139,6 +142,11 @@ export default function MainContent() {
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
+          PaperProps={{
+            style: {
+              backgroundColor: 'transparent'
+            }
+          }}
           anchorOrigin={{
             vertical: "top",
             horizontal: "left",
@@ -158,7 +166,7 @@ export default function MainContent() {
             value={side}
             exclusive
             style={{ backgroundColor: "#16191C" }}
-            onChange={() => dispatch(handleSideChange(side))}
+            onChange={handleSideClick}
           >
             <ToggleButton value="attack" aria-label="left aligned">
               {/* add selected effects and colorx */}
@@ -173,7 +181,6 @@ export default function MainContent() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Popover>
-        {/* <ZoomButtons zoom={handleZoom} /> */}
       </Grid>
     </Box>
   )
