@@ -7,8 +7,8 @@ import Button from "@material-ui/core/Button"
 import SettingsIcon from "@material-ui/icons/Settings"
 import CloseIcon from "@material-ui/icons/Close"
 import Popover from "@material-ui/core/Popover"
-import { graphql, useStaticQuery } from "gatsby"
-import { makeStyles } from '@material-ui/core/styles';
+import { Image } from "cloudinary-react"
+import { makeStyles } from "@material-ui/core/styles"
 import Img from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
 import ZoomButtons from "./zoomButtons.js"
@@ -27,30 +27,13 @@ import { useSelector, useDispatch } from "react-redux"
 const useCardContentStyles = makeStyles({
   root: {
     padding: 0,
-    '&:last-child': {
+    "&:last-child": {
       paddingBottom: 0,
     },
   },
-});
+})
 
 export default function MainContent() {
-
-
-  const data = useStaticQuery(graphql`
-    query CloudinaryImage {
-      allCloudinaryMedia(
-        filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
-      ) {
-        edges {
-          node {
-            secure_url
-          }
-        }
-      }
-    }
-  `)
-
-
   /*   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/view_l.jpg",
   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/preview.jpg",
   "https://sothatwemaybefree.com/medias/images/stuff_view/16/57fff9315b54c/position1.jpg",
@@ -58,6 +41,7 @@ export default function MainContent() {
 
   const side = useSelector(state => state.settingsReducer.side)
   const wall = useSelector(state => state.settingsReducer.wall)
+  const map = useSelector(state => state.settingsReducer.map)
   const label = useSelector(state => state.settingsReducer.label)
   const showPanels = useSelector(state => state.abilityReducer.showPanel)
   const selectedAbility = useSelector(state => state.abilityReducer.id)
@@ -71,13 +55,12 @@ export default function MainContent() {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  dispatch(handleQuery(data.allCloudinaryMedia.edges)) //where we send the query to the store
   const imageArray = useSelector(state => state.settingsReducer.imageArray)
 
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
 
-  const classesCardContent = useCardContentStyles();
+  const classesCardContent = useCardContentStyles()
 
   return (
     <Box>
@@ -90,16 +73,22 @@ export default function MainContent() {
           <Grid container direction="column" item xs={12} md={5} spacing={2}>
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
-                {imageArray && (
+                {true && (
                   <CardContent className={classesCardContent.root}>
-                    <img src={imageArray[imageIndex].node.secure_url}></img>
+                    {/*                     <img src={imageArray[imageIndex].node.secure_url}></img>
+                     */}{" "}
+                    <Image
+                          cloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+                          publicId={imageArray[0]}
+
+                    />
                     {/* <p style={{ color: "white" }}>{selectedAbility}</p> */}
                   </CardContent>
                 )}
               </Card>
             </Grid>
             <Grid container item spacing={2}>
-              {imageArray &&
+              {true &&
                 imageArray.map((image, index) => (
                   <Grid item xs={6} key={index}>
                     <Card
@@ -107,10 +96,15 @@ export default function MainContent() {
                       style={{ backgroundColor: "#16191C", cursor: "pointer" }}
                     >
                       <CardContent className={classesCardContent.root}>
-                        <img
+                        {/*                         <img
                           style={{ width: "auto", height: "auto" }}
                           onClick={() => setImageIndex(index)}
                           src={image.node.secure_url}
+                        /> */}
+                        <Image
+                          cloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+                          onClick={() => setImageIndex(index)}
+                          publicId={image}
                         />
                       </CardContent>
                     </Card>
@@ -136,8 +130,8 @@ export default function MainContent() {
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
           ) : (
-              <SettingsIcon style={{ color: "#7a7a7a" }} />
-            )}
+            <SettingsIcon style={{ color: "#7a7a7a" }} />
+          )}
         </Button>
 
         <Popover

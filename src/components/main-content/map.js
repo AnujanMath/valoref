@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { changeAbility } from "../../_actions"
+import { changeAbility, handleQuery } from "../../_actions"
 import Fade from "@material-ui/core/Fade"
 
 export default function Map({ label, wall }) {
@@ -38,11 +38,22 @@ export default function Map({ label, wall }) {
 function MapContent({ label, wall, setTransform, resetTransform }) {
   const dispatch = useDispatch();
   const showPanels = useSelector(state => state.abilityReducer.showPanel);
-
+  const side = useSelector(state => state.settingsReducer.side)
+  const agent = useSelector(state => state.settingsReducer.agent)
+  const map = useSelector(state => state.settingsReducer.map)
   const click = e => {
     console.log(e.target.transform.baseVal[0].matrix);
     dispatch(changeAbility(e.target.id));
     setTimeout(() => { showPanels ? setTransform(-400, -400, 2, 200, 'easeOut') : resetTransform() }, 300)
+    let queryArray = []
+    for (let i = 1; i < 5; i++) {
+      queryArray.push("valoref/maps/" + map + "/" + agent+ "/" + e.target.id +"/"+ i)
+      
+      
+    }
+    console.log(queryArray)
+    dispatch(handleQuery(queryArray));
+
   }
 
 
