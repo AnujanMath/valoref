@@ -4,12 +4,14 @@ import settingsReducer from './settingsReducer'
 import showSideBarReducer from './sideBarReducer'
 import zoomReducer from './zoomReducer'
 import abilityReducer from './abilityReducer'
+import zoomSliderReducer from './zoomSliderReducer'
 
 const allReducers = combineReducers({
     settingsReducer,
     showSideBarReducer,
     zoomReducer,
-    abilityReducer
+    abilityReducer,
+    zoomSliderReducer
 })
 
 export default allReducers;

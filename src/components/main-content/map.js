@@ -1,12 +1,14 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { changeAbility } from "../../_actions"
 import Fade from "@material-ui/core/Fade"
+import { handleZoomSlider } from "../../_actions"
 
 export default function Map({ label, wall }) {
   const options = { limitToWrapper: true }
   const doubleClick = { disabled: true }
+  const wheel = { step: 20}
 
   return (
     <TransformWrapper
@@ -14,18 +16,14 @@ export default function Map({ label, wall }) {
       defaultPositionX={0}
       defaultPositionY={1}
       options={options}
-      doubleClick={doubleClick}
+      doubleClick={{ doubleClick }}
+      wheel={wheel}
     >
-      {({ zoomIn, zoomOut, resetTransform, setTransform, ...rest }) => (
+      {({ zoomIn, zoomOut, resetTransform, setScale, ...rest }) => (
         <React.Fragment>
-          <div className="tools">
-            <button onClick={zoomIn}>+</button>
-            <button onClick={zoomOut}>-</button>
-            <button onClick={resetTransform}>x</button>
-          </div>
           <TransformComponent>
             <Fade in={true}>
-              <MapContent label={label} wall={wall} setTransform={setTransform} resetTransform={resetTransform} />
+              <MapContent label={label} wall={wall} setScale={setScale} resetTransform={resetTransform} />
             </Fade>
           </TransformComponent>
         </React.Fragment>
@@ -35,21 +33,27 @@ export default function Map({ label, wall }) {
   )
 }
 
-function MapContent({ label, wall, setTransform, resetTransform }) {
+function MapContent({ label, wall, setScale, resetTransform }) {
   const dispatch = useDispatch();
   const showPanels = useSelector(state => state.abilityReducer.showPanel);
+
+  //mount lifecycle hook
+  useEffect(() => {
+    dispatch(handleZoomSlider(setScale))
+    console.log('mount map content');
+  }, []);
 
   const click = e => {
     console.log(e.target.transform.baseVal[0].matrix);
     dispatch(changeAbility(e.target.id));
-    setTimeout(() => { showPanels ? setTransform(-400, -400, 2, 200, 'easeOut') : resetTransform() }, 300)
+    setTimeout(() => resetTransform(), 0)
   }
 
 
   return (
     <svg
       width={'100%'}
-      height={window.innerHeight}
+      height={'90vh'}
       viewBox="0 0 798 887"
     >
       <path

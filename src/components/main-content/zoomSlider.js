@@ -6,6 +6,8 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Box, Grid, CardContent } from "@material-ui/core"
 import Card from "@material-ui/core/Card"
+
+import { useSelector } from "react-redux"
 const useStylesSlider = makeStyles({
     root: {
         width: 200,
@@ -22,13 +24,12 @@ const useStylesCard = makeStyles({
 export default function ContinuousSlider({ zoomIn }) {
     const classesSlider = useStylesSlider();
     const classesCard = useStylesCard();
-    const [value, setValue] = React.useState(30);
+    const [value, setValue] = React.useState(1);
+    const setScale = useSelector(state => state.zoomSliderReducer.function)
 
     const handleChange = (event, newValue) => {
-        if (newValue !== value)
-            zoomIn(newValue > value ? 1.02 : 0.98);
         setValue(newValue);
-
+        setScale(newValue, 0, 'linear');
     };
 
     return (
@@ -41,7 +42,7 @@ export default function ContinuousSlider({ zoomIn }) {
                         <RemoveIcon htmlColor="white" />
                     </Grid>
                     <Grid item xs>
-                        <Slider style={{ color: 'white' }} value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
+                        <Slider min={1} max={2} step={0.01} style={{ color: 'white' }} value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
                     </Grid>
                     <Grid item>
                         <AddIcon htmlColor="white" />

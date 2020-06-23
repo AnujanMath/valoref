@@ -51,6 +51,12 @@ export const handleZoom = option => {
     payload: option,
   }
 }
+export const handleZoomSlider = value => {
+  return {
+    type: "SET_ZOOM_SLIDER",
+    payload: value
+  }
+}
 const handleAbilityChange = id => {
   console.log(id)
   return {
@@ -65,20 +71,20 @@ const handleAbilityChange = id => {
 export const changeAbility = id => dispatch => {
   dispatch(handleAbilityChange(id))
   //add any other function/query you want to run here
-/*   const data = useLazyQuery(gql`
-    query CloudinaryImage {
-      allCloudinaryMedia(
-        filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
-      ) {
-        edges {
-          node {
-            secure_url
+  /*   const data = useLazyQuery(gql`
+      query CloudinaryImage {
+        allCloudinaryMedia(
+          filter: { public_id: { regex: "/maps/haven/Cypher/camera_1//" } }
+        ) {
+          edges {
+            node {
+              secure_url
+            }
           }
         }
       }
-    }
-  `)
-  dispatch(handleQuery(data.allCloudinaryMedia.edges)) */
+    `)
+    dispatch(handleQuery(data.allCloudinaryMedia.edges)) */
 }
 
 //return Promise.resolve();
