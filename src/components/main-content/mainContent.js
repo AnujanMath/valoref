@@ -68,12 +68,12 @@ export default function MainContent() {
   return (
     <Box>
       <Grid container direction="row" spacing={1}>
-        <Grid item xs>
+        <Grid item xs={12} sm>
           <Map label={label} wall={wall}></Map>
         </Grid>
         {/* TURN THE SLIDE IN CARDS INTO A FUNCTIONAL COMPONENT */}
         <Slide in={showPanels} mountOnEnter unmountOnExit>
-          <Grid container direction="column" item xs={12} md={5} spacing={2}>
+          <Grid container direction="column" item xs={12} sm={6} spacing={2}>
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
                 {true && (
@@ -93,7 +93,7 @@ export default function MainContent() {
             <Grid container item spacing={2}>
               {true &&
                 imageArray.map((image, index) => (
-                  <Grid item xs={6} key={index}>
+                  <Grid item xs={4} key={index}>
                     <Card
                       raised
                       style={{ backgroundColor: "#16191C", cursor: "pointer" }}
