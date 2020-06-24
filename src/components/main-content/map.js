@@ -4,6 +4,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { changeAbility, handleQuery } from "../../_actions"
 import Fade from "@material-ui/core/Fade"
 import { handleZoomSlider } from "../../_actions"
+import { getFixedImageObject } from 'gatsby-transformer-cloudinary';
 
 export default function Map({ label, wall }) {
   const options = { limitToWrapper: true }
@@ -49,12 +50,20 @@ function MapContent({ label, wall, setScale, resetTransform }) {
     //setTimeout(() => { showPanels ? setTransform(-400, -400, 2, 200, 'easeOut') : resetTransform() }, 300)
     setTimeout(() => resetTransform(), 0)
     let queryArray = []
+    let imageArray = []
     for (let i = 1; i < 4; i++) {
       queryArray.push("valoref/maps/" + map + "/" + agent + "/" + e.target.id + "/" + i)
     }
-    console.log(queryArray)
-    dispatch(handleQuery(queryArray));
-
+    queryArray.forEach(element => {
+      getFixedImageObject({
+        public_id: element,
+        cloudName: process.env.GATSBY_CLOUDINARY_CLOUD_NAME,
+        originalHeight: 3024,
+        originalWidth: 4032,
+      }).then(result => imageArray.push(result));
+    });
+    console.log(imageArray)
+    dispatch(handleQuery(imageArray));
   }
 
 

@@ -7,9 +7,8 @@ import Button from "@material-ui/core/Button"
 import SettingsIcon from "@material-ui/icons/Settings"
 import CloseIcon from "@material-ui/icons/Close"
 import Popover from "@material-ui/core/Popover"
-import { Image } from "cloudinary-react"
 import { makeStyles } from "@material-ui/core/styles"
-import Img from "gatsby-image"
+import Image from "gatsby-image"
 import ZoomSlider from "./zoomSlider.js"
 import ZoomButtons from "./zoomButtons.js"
 import Typography from "@material-ui/core/Typography"
@@ -76,22 +75,15 @@ export default function MainContent() {
           <Grid container direction="column" item xs={12} md={5} spacing={2}>
             <Grid item>
               <Card raised style={{ backgroundColor: "#16191C" }}>
-                {true && (
+                {imageArray && (
                   <CardContent className={classesCardContent.root}>
-                    {/*                     <img src={imageArray[imageIndex].node.secure_url}></img>
-                     */}{" "}
-                    <Image
-                      cloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
-                      publicId={imageArray[0]}
-
-                    />
-                    {/* <p style={{ color: "white" }}>{selectedAbility}</p> */}
+                    {/* <Image fixed={imageArray && imageArray[0]} /> */}
                   </CardContent>
                 )}
               </Card>
             </Grid>
             <Grid container item spacing={2}>
-              {true &&
+              {imageArray &&
                 imageArray.map((image, index) => (
                   <Grid item xs={6} key={index}>
                     <Card
@@ -105,10 +97,10 @@ export default function MainContent() {
                           src={image.node.secure_url}
                         /> */}
                         <Image
-                          cloudName={process.env.GATSBY_CLOUDINARY_CLOUD_NAME}
+                          fixed={image}
                           onClick={() => setImageIndex(index)}
-                          publicId={image}
                         />
+                        <div>Hello</div>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -133,8 +125,8 @@ export default function MainContent() {
           {open ? (
             <CloseIcon style={{ color: "#7a7a7a" }} />
           ) : (
-              <SettingsIcon style={{ color: "#7a7a7a" }} />
-            )}
+            <SettingsIcon style={{ color: "#7a7a7a" }} />
+          )}
         </Button>
 
         <Popover
@@ -144,8 +136,8 @@ export default function MainContent() {
           onClose={handleClose}
           PaperProps={{
             style: {
-              backgroundColor: 'transparent'
-            }
+              backgroundColor: "transparent",
+            },
           }}
           anchorOrigin={{
             vertical: "top",
